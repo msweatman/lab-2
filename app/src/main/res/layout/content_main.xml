@@ -22,32 +22,29 @@
             android:id="@+id/introLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="top|center"
             android:text="@string/welcome_to_rock_paper_scissors"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/choiceLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/please_choose_your_weapon"
             android:textSize="24sp" />
 
         <Button
             android:id="@+id/rockButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="rockButtonClicked"
             android:text="@string/rock" />
 
         <Button
             android:id="@+id/paperButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="paperButtonClicked"
             android:text="@string/paper" />
 
         <Button
             android:id="@+id/scissorsButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:onClick="scissorsButtonClicked"
             android:text="@string/scissors" />
 
         <TextView
@@ -57,15 +54,10 @@
             android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/playerWeaponLabel"
+            android:id="@+id/weaponLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="24sp" />
-
-        <TextView
-            android:id="@+id/computerWeaponLabel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="top|center"
             android:textSize="24sp" />
 
         <TextView

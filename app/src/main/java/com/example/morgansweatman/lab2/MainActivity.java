@@ -9,12 +9,15 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.*;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private int playerChoice;
-    private int computerChoice;
-
+    private Weapon playerChoice;
+    private Weapon computerChoice;
+    private int playerScore;
+    private int computerScore;
+    private static final int SCORE_CAP = 3;
 
     public enum Weapon {
 
@@ -29,7 +32,111 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public String toString() { return message; }
 
-    };
+    }
+
+    public void rockButtonClicked(View v) {
+        playerChoice = Weapon.ROCK;
+        determineWinner(playerChoice);
+    }
+
+    public void paperButtonClicked(View v) {
+        playerChoice = Weapon.PAPER;
+        determineWinner(playerChoice);
+    }
+
+    public void scissorsButtonClicked(View v) {
+        playerChoice = Weapon.SCISSORS;
+        determineWinner(playerChoice);
+    }
+
+
+    public void setComputerChoice() {
+        Random rand = new Random();
+        int randomChoice = rand.nextInt(3);
+        switch (randomChoice) {
+            case 0:
+                computerChoice = Weapon.ROCK;
+                break;
+            case 1:
+                computerChoice = Weapon.PAPER;
+                break;
+            case 2:
+                computerChoice = Weapon.SCISSORS;
+                break;
+        }
+    }
+
+    public void determineWinner(Weapon playerChoice) {
+        TextView s = (TextView) findViewById(R.id.scoreLabel);
+        TextView w = (TextView) findViewById(R.id.weaponLabel);
+        TextView t = (TextView) findViewById(R.id.resultsLabel);
+
+        setComputerChoice();
+
+        switch (playerChoice) {
+            case ROCK:
+                switch (computerChoice) {
+                    case ROCK:
+                        t.setText("It's a tie!");
+                        break;
+                    case PAPER:
+                        computerScore++;
+                        t.setText("Computer wins... paper covers rock!");
+                        break;
+                    case SCISSORS:
+                        playerScore++;
+                        t.setText("Player wins... rock blunts scissors!");
+                        break;
+                }
+                break;
+            case PAPER:
+                switch (computerChoice) {
+                    case ROCK:
+                        playerScore++;
+                        t.setText("Player wins... paper covers rock!");
+                        break;
+                    case PAPER:
+                        t.setText("It's a tie!");
+                        break;
+                    case SCISSORS:
+                        computerScore++;
+                        t.setText("Computer wins... scissors cut paper!");
+                        break;
+                }
+                break;
+            case SCISSORS:
+                switch (computerChoice) {
+                    case ROCK:
+                        computerScore++;
+                        t.setText("Computer wins... rock blunts scissors!");
+                        break;
+                    case PAPER:
+                        playerScore++;
+                        t.setText("Player wins... scissors cut paper!");
+                        break;
+                    case SCISSORS:
+                        t.setText("It's a tie!");
+                        break;
+                }
+                break;
+        }
+
+        StringBuilder scoreBuilder = new StringBuilder();
+        scoreBuilder.append("Player: ");
+        scoreBuilder.append(playerScore);
+        scoreBuilder.append(" ");
+        scoreBuilder.append("Computer: ");
+        scoreBuilder.append(computerScore);
+        s.setText(scoreBuilder);
+
+        StringBuilder weaponBuilder = new StringBuilder();
+        weaponBuilder.append("Player's Weapon: ");
+        weaponBuilder.append(playerChoice);
+        weaponBuilder.append("\n");
+        weaponBuilder.append("Computer's Weapon: ");
+        weaponBuilder.append(computerChoice);
+        w.setText(weaponBuilder);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +153,8 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+        playerScore = 0;
+        computerScore = 0;
     }
 
     @Override
